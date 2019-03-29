@@ -212,6 +212,16 @@ body{
 }
 /* main content width according to screen resolution */
 @media screen and (max-width: 991px) {
+  .kReportHeader {
+    width: 970px !important;
+    margin: 0 auto;
+  }
+
+  .stickyHeader .kTagsFilterContainer {
+    width: 1000px !important;
+    margin: 0 auto;
+  }
+
   .kContent {
     width: 970px !important;
     margin: auto !important;
@@ -219,6 +229,16 @@ body{
   }
 }
 @media screen and (min-width: 992px) {
+  .kReportHeader {
+    width: 970px !important;
+    margin: 0 auto;
+  }
+
+  .stickyHeader .kTagsFilterContainer {
+    width: 1000px !important;
+    margin: 0 auto;
+  }
+
   .kContent {
     width: 970px !important;
     margin: auto !important;
@@ -226,6 +246,16 @@ body{
   }
 }
 @media screen and (min-width: 1280px) {
+  .kReportHeader {
+    width: 1200px!important;
+    margin: 0 auto;
+  }
+
+  .stickyHeader .kTagsFilterContainer {
+    width: 1230px !important;
+    margin: 0 auto;
+  }
+
   .kContent {
     width: 1200px!important;
     margin: auto !important;
@@ -233,6 +263,16 @@ body{
   }
 }
 @media screen and (min-width: 1610px) {
+  .kReportHeader {
+    width: 1500px !important;
+    margin: 0 auto;
+  }
+
+  .stickyHeader .kTagsFilterContainer {
+    width: 1530px !important;
+    margin: 0 auto;
+  }
+
   .kContent {
     width: 1500px !important;
     margin: auto !important;

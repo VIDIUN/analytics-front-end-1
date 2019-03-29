@@ -61,6 +61,7 @@ export class FilterComponent {
   @HostBinding('style.padding-bottom') _bottomPadding = '0';
   
   @Input() name = 'default';
+  @Input() sticksTo: string;
 
   @Input() set opened(value: boolean) {
     const isOpened = !!value;

@@ -1,14 +1,20 @@
 <div [attr.data-aid]="'filter-' + name" class="kRefineFilters kReport">
+
   <div class="kTagsContainer" *ngIf="_tags.length">
-    <kTags title=""
-           labelField="label"
-           tooltipField="tooltip"
-           [data]="_tags"
-           [clearAllLabel]="'app.common.clearAll' | translate"
-           (onTagRemove)="_removeFilter($event)"
-           (onRemoveAll)="_removeAll()">
-    </kTags>
+    <kSticky [stickyId]="'filter' + name" [sticksTo]="sticksTo" stickyClass="stickyHeader">
+      <div class="kTagsFilterContainer">
+        <kTags title=""
+               labelField="label"
+               tooltipField="tooltip"
+               [data]="_tags"
+               [clearAllLabel]="'app.common.clearAll' | translate"
+               (onTagRemove)="_removeFilter($event)"
+               (onRemoveAll)="_removeAll()">
+        </kTags>
+      </div>
+    </kSticky>
   </div>
+
   <div *ngIf="showFilters"
        [@state]="_state"
        (@state.done)="_filtersAnimationDone($event)">

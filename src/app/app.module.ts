@@ -18,6 +18,7 @@ import { SharedModule } from './shared/shared.module';
 import { FrameEventManagerModule } from 'shared/modules/frame-event-manager/frame-event-manager.module';
 import { KalturaLogger, KalturaLoggerModule } from '@kaltura-ng/kaltura-logger';
 import { environment } from '../environments/environment';
+import { StickyModule } from '@kaltura-ng/kaltura-ui';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json?v=' + analyticsConfig.appVersion);
@@ -47,6 +48,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     }),
     ConfirmDialogModule,
     KalturaLoggerModule.forRoot('AnalyticsNG'),
+    StickyModule.forRoot(),
   ],
   providers: [
     BrowserService,

@@ -20,7 +20,7 @@ import { ReportService } from './services/report.service';
 import { ReportTabsComponent } from './components/report-tabs/report-tabs.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { AutoCompleteModule } from '@kaltura-ng/kaltura-primeng-ui';
-import { AreaBlockerModule, InputHelperModule, PopupWidgetModule, TagsModule, TooltipModule } from '@kaltura-ng/kaltura-ui';
+import { AreaBlockerModule, InputHelperModule, PopupWidgetModule, StickyModule, TagsModule, TooltipModule } from '@kaltura-ng/kaltura-ui';
 import { TimeUnitsComponent } from './components/date-filter/time-units.component';
 import { CompareService } from 'shared/services/compare.service';
 import { TrendPipe } from 'shared/pipes/trend.pipe';
@@ -77,6 +77,7 @@ import { HorizontalBarChartComponent } from 'shared/components/horizontal-bar-ch
     NgxEchartsModule,
     PaginatorModule,
     TableModule,
+    StickyModule,
   ],
   declarations: [
     DateFilterComponent,
