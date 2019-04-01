@@ -3,6 +3,10 @@
   <div class="kTagsContainer" *ngIf="_tags.length">
     <kSticky [stickyId]="'filter' + name" [sticksTo]="sticksTo" stickyClass="stickyHeader">
       <div class="kTagsFilterContainer">
+        <span class="kDisclaimer" *ngIf="_showDisclaimer">
+          <i class="kIconInfo_Full"></i>
+          {{'app.filters.disclaimer' | translate}}
+        </span>
         <kTags title=""
                labelField="label"
                tooltipField="tooltip"
