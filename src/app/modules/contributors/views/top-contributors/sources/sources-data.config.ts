@@ -14,21 +14,13 @@ export class SourcesDataConfig extends ReportDataBaseConfig {
     return {
       [ReportDataSection.table]: {
         fields: {
-          'source': {
+          'name': {
             format: value => value,
             sortOrder: 1,
           },
-          'added_entries': {
+          'totalCount': {
             format: value => value,
             sortOrder: 1,
-          },
-          'added_msecs': {
-            format: value => value,
-            sortOrder: 2,
-          },
-          'unique_contributors': {
-            format: value => value,
-            sortOrder: 3,
           },
         }
       },

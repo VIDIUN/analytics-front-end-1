@@ -46,7 +46,7 @@ export class EngagementTopVideosComponent extends EngagementBaseReportComponent 
   public _compareFirstTimeLoading = true;
   public _currentDates: string;
   public _compareDates: string;
-  public _reportType = KalturaReportType.topContentCreator;
+  public _reportType = KalturaReportType.topContent;
 
   constructor(private _errorsManager: ErrorsManagerService,
               private _reportService: ReportService,

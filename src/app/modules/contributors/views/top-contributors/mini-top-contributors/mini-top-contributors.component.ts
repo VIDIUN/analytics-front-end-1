@@ -26,7 +26,7 @@ export class MiniTopContributorsComponent extends TopContributorsBaseReportCompo
   @Input() dateFilterComponent: DateFilterComponent;
 
   private _order = '-added_entries';
-  private _reportType = KalturaReportType.topContentContributors;
+  private _reportType = KalturaReportType.topContributors;
   private _dataConfig: ReportDataConfig;
   
   protected _componentId = 'mini-top-contributors';

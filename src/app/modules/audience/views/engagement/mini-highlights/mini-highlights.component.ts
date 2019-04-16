@@ -25,7 +25,7 @@ export class EngagementMiniHighlightsComponent extends EngagementBaseReportCompo
   @Input() dateFilterComponent: DateFilterComponent;
   
   private _order = '-month_id';
-  private _reportType = KalturaReportType.userEngagementTimeline;
+  private _reportType = KalturaReportType.topContent;
   private _dataConfig: ReportDataConfig;
   
   protected _componentId = 'mini-highlights';

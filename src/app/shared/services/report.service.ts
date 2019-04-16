@@ -232,9 +232,10 @@ export class ReportService implements OnDestroy {
       }
     });
     
-    return tabsData.sort((a, b) => {
+    var val = tabsData.sort((a, b) => {
       return a.sortOrder - b.sortOrder;
-    });
+      });
+    return val;
   }
   
   private _getMissingDatesValues(startDate: moment.Moment,

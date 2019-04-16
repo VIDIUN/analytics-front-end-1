@@ -23,7 +23,7 @@ export class MiniPeakDayComponent extends EngagementBaseReportComponent {
   @Input() dateFilterComponent: DateFilterComponent;
 
   private _order = '-count_plays';
-  private _reportType = KalturaReportType.userEngagementTimeline;
+  private _reportType = KalturaReportType.userEngagement;
   private _dataConfig: ReportDataConfig;
   
   protected _componentId = 'mini-peak-day';

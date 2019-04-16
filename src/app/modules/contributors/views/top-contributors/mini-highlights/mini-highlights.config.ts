@@ -11,26 +11,20 @@ export class MiniHighlightsConfig extends ReportDataBaseConfig {
   
   public getConfig(): ReportDataConfig {
     return {
-      [ReportDataSection.totals]: {
+      [ReportDataSection.table]: {
         fields: {
-          'unique_contributors': {
-            format: value => ReportHelper.numberOrZero(value),
+          'name': {
+            format: value => value,
             title: this._translate.instant(`app.contributors.title`),
             tooltip: this._translate.instant(`app.contributors.contributors_tt`),
             sortOrder: 1,
           },
-          'added_entries': {
+          'count_total': {
             format: value => ReportHelper.numberOrZero(value),
-            title: this._translate.instant(`app.contributors.added_entries`),
-            tooltip: this._translate.instant(`app.contributors.added_entries_tt`),
+            title: this._translate.instant(`app.contributors.count_total`),
+            tooltip: this._translate.instant(`app.contributors.count_total`),
             sortOrder: 2,
           },
-          'added_msecs': {
-            format: value => ReportHelper.numberOrZero(value),
-            title: this._translate.instant(`app.contributors.added_msecs`),
-            tooltip: this._translate.instant(`app.contributors.added_msecs_tt`),
-            sortOrder: 3,
-          }
         }
       }
     };

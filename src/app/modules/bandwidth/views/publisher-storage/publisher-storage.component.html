@@ -14,9 +14,9 @@
 
     <div class="kReportContent">
       <app-report-tabs [tabs]="_tabsData" [compareMode]="isCompareMode" (tabChange)="_onTabChange($event)"></app-report-tabs>
-      <div class="kDimensions">
+      <!--div class="kDimensions">
         <app-time-units [dateFilter]="dateFilter"></app-time-units>
-      </div>
+      </div-->
       <div class="kChart">
         <div echarts class="kChart" [options]="_barChartData[_selectedMetrics]" *ngIf="_chartType==='bar'"></div>
         <div echarts class="kChart" [options]="_lineChartData[_selectedMetrics]" *ngIf="_chartType==='line'"></div>

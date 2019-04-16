@@ -18,7 +18,7 @@ import { getColorPercent } from 'shared/utils/colors';
 import { analyticsConfig } from 'configuration/analytics-config';
 
 export type funnelData = {
-  impressions: number;
+//impressions: number;
   plays: number;
   playThrough: {
     perc25: number;
@@ -99,14 +99,11 @@ export class EngagementImpressionsComponent extends EngagementBaseReportComponen
   }
 
   public updateFunnel(): void {
-    const plays = (this._funnelData.plays / this._funnelData.impressions * 100).toFixed(2);
+    const plays = (this._funnelData.plays).toFixed(2);
     const playThrough = (this._funnelData.playThrough['perc' + this._selectedPlaythrough] / this._funnelData.plays * 100).toFixed(2);
     this.echartsIntance.setOption({
       series: [{
         data: [
-          {
-            value: 100,
-            name: this._translate.instant('app.engagement.playerImpressions')},
           {
             value: Math.round(parseFloat(plays)),
             name: this._translate.instant('app.engagement.plays')
@@ -205,7 +202,7 @@ export class EngagementImpressionsComponent extends EngagementBaseReportComponen
 
     const data = compare.totals.data.split(analyticsConfig.valueSeparator);
     this.compareFunnelData = {
-      impressions: data[6].length ? parseInt(data[6]) : 0,
+    //impressions: data[6].length ? parseInt(data[6]) : 0,
       plays: data[0].length ? parseInt(data[0]) : 0,
       playThrough: {
         perc25: data[1].length ? parseInt(data[1]) : 0,
@@ -218,13 +215,9 @@ export class EngagementImpressionsComponent extends EngagementBaseReportComponen
   }
 
   private updateCompareFunnel(): void {
-    const plays = (this.compareFunnelData.plays / this.compareFunnelData.impressions * 100).toFixed(2);
-    const playThrough = (this.compareFunnelData.playThrough['perc' + this._selectedPlaythrough] / this.compareFunnelData.impressions * 100).toFixed(2);
+    const plays = (this.compareFunnelData.plays).toFixed(2);
+    const playThrough = (this.compareFunnelData.playThrough['perc' + this._selectedPlaythrough]).toFixed(2);
     this.compareEchartsIntance.setOption({series: [{data: [
-          {
-            value: 100,
-            name: this._translate.instant('app.engagement.playerImpressions')
-          },
           {
             value: Math.round(parseFloat(plays)),
             name: this._translate.instant('app.engagement.plays')
@@ -242,7 +235,7 @@ export class EngagementImpressionsComponent extends EngagementBaseReportComponen
     this.echartsIntance.setOption({series: [{left: '65%'}]}, false);
     const data = totals.data.split(analyticsConfig.valueSeparator);
     this._funnelData = {
-      impressions: data[6].length ? parseInt(data[6]) : 0,
+    //impressions: data[6].length ? parseInt(data[6]) : 0,
       plays: data[0].length ? parseInt(data[0]) : 0,
       playThrough: {
         perc25: data[1].length ? parseInt(data[1]) : 0,
@@ -260,18 +253,18 @@ export class EngagementImpressionsComponent extends EngagementBaseReportComponen
 
   private getChartTooltip(params): string {
     if (this.isCompareMode) {
-      let value = this._funnelData.impressions;
+    let value = this._funnelData.plays;
       if (params.dataIndex === 1) {
-        value = this._funnelData.plays;
+        let value = this._funnelData.plays;
       } else if (params.dataIndex === 2) {
-        value = this._funnelData.playThrough['perc' + this._selectedPlaythrough];
+        let value = this._funnelData.playThrough['perc' + this._selectedPlaythrough];
       }
 
-      let compareValue = this.compareFunnelData.impressions;
+      //let compareValue = this.compareFunnelData.impressions;
       if (params.dataIndex === 1) {
-        compareValue = this.compareFunnelData.plays;
+        let compareValue = this.compareFunnelData.plays;
       } else if (params.dataIndex === 2) {
-        compareValue = this.compareFunnelData.playThrough['perc' + this._selectedPlaythrough];
+        let compareValue = this.compareFunnelData.playThrough['perc' + this._selectedPlaythrough];
       }
       // const trend = (compareValue / value * 100).toFixed(2) + '%'; // TODO - calc trend by formula, add arrow and colors
       return this._currentDates + `<span style="color: #333333"><br/><b>${params.data.name}: ${ReportHelper.numberWithCommas(value)} </b></span>`; // <span> ${trend}</span> // TODO add trend if needed
@@ -281,11 +274,11 @@ export class EngagementImpressionsComponent extends EngagementBaseReportComponen
   }
 
   private getCompareChartTooltip(params): string {
-    let value = this.compareFunnelData.impressions;
+  let value = this.compareFunnelData.plays;
     if (params.dataIndex === 1) {
-      value = this.compareFunnelData.plays;
+      let value = this.compareFunnelData.plays;
     } else if (params.dataIndex === 2) {
-      value = this.compareFunnelData.playThrough['perc' + this._selectedPlaythrough];
+      let value = this.compareFunnelData.playThrough['perc' + this._selectedPlaythrough];
     }
     return this._compareDates + `<span style="color: #333333"><br/><b>${params.data.name}: ${ReportHelper.numberWithCommas(value)}</b></span>`;
   }

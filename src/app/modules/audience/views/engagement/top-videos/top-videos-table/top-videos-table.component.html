@@ -33,9 +33,6 @@
                  (mouseleave)="_hideOverlay()"
                  (mouseenter)="_showOverlay($event, data['object_id'])">
               <span class="kTableColumn kEntryName">{{data['entry_name']}}</span>
-              <div class="kEntryDetails">
-                <span class="kTableColumn">{{'app.engagement.topVideosReport.by' | translate}} {{data['creator_name']}} • {{data['created_at']}}</span>
-              </div>
             </div>
           </td>
           <ng-container *ngIf="!isCompareMode">
@@ -53,11 +50,11 @@
             <td [ngStyle]="{'width': '200px'}">
               <div class="kTableCell">
                 <i class="icon-viewer-contributor"></i>
-                <span class="kCellValue">{{data['unique_known_users']}}</span>&nbsp;
+                <span class="kCellValue">{{data['count_loads']}}</span>&nbsp;
                 <span class="kTableColumn"
-                      [kTooltip]="'app.engagement.topVideosReport.unique_known_users' | translate"
+                      [kTooltip]="'app.engagement.topVideosReport.count_loads' | translate"
                       [showOnEllipsis]="true">
-            {{'app.engagement.topVideosReport.unique_known_users' | translate}}
+            {{'app.engagement.topVideosReport.count_loads' | translate}}
             </span>
               </div>
             </td>

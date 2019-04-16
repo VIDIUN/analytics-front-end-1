@@ -14,7 +14,7 @@ export const routing: Route[] = [
       { path: 'technology', component: TechnologyComponent },
       { path: 'geo-location', component: GeoLocationComponent },
       { path: 'engagement', component: EngagementComponent },
-      { path: 'content-interactions', component: ContentInteractionsComponent }
+      //{ path: 'content-interactions', component: ContentInteractionsComponent }
     ]
   }
 ];

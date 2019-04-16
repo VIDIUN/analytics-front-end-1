@@ -23,7 +23,7 @@ import { TopContributorsBaseReportComponent } from '../top-contributors-base-rep
 export class ContributorsHighlightsComponent extends TopContributorsBaseReportComponent {
   @Input() dateFilterComponent: DateFilterComponent;
   
-  private _reportType = KalturaReportType.topContentContributors;
+  private _reportType = KalturaReportType.topContributors;
   private _dataConfig: ReportDataConfig;
   
   protected _componentId = 'highlights';

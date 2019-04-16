@@ -33,15 +33,6 @@ export class GeoLocationDataConfig extends ReportDataBaseConfig {
           'count_plays': {
             format: value => ReportHelper.numberOrNA(value)
           },
-          'unique_known_users': {
-            format: value => ReportHelper.numberOrNA(value)
-          },
-          'avg_view_drop_off': {
-            format: value => ReportHelper.percents(value)
-          },
-          'coordinates': {
-            format: value => value
-          }
         }
       },
       [ReportDataSection.totals]: {
@@ -53,16 +44,6 @@ export class GeoLocationDataConfig extends ReportDataBaseConfig {
             title: this._translate.instant(`app.audience.geo.count_plays`),
             tooltip: this._translate.instant(`app.audience.geo.count_plays_tt`),
           },
-          'unique_known_users': {
-            format: value => ReportHelper.numberOrNA(value),
-            title: this._translate.instant(`app.audience.geo.unique_known_users`),
-            tooltip: this._translate.instant(`app.audience.geo.unique_known_users_tt`),
-          },
-          'avg_view_drop_off': {
-            format: value => ReportHelper.percents(value),
-            title: this._translate.instant(`app.audience.geo.avg_view_drop_off`),
-            tooltip: this._translate.instant(`app.audience.geo.avg_view_drop_off_tt`),
-          }
         }
       }
     };

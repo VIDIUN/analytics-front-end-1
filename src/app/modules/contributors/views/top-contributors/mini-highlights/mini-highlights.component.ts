@@ -32,7 +32,7 @@ export class ContributorsMiniHighlightsComponent extends TopContributorsBaseRepo
   @Input() dateFilterComponent: DateFilterComponent;
   
   private _order = '-month_id';
-  private _reportType = KalturaReportType.topContentContributors;
+  private _reportType = KalturaReportType.topContributors;
   private _dataConfig: ReportDataConfig;
   
   protected _componentId = 'mini-highlights';

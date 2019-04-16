@@ -26,16 +26,16 @@ export class HighlightsConfig extends ReportDataBaseConfig {
             colors: [getPrimaryColor('time'), getSecondaryColor('time')],
             graphTooltip: (value) => `<span class="kValue">${this._translate.instant(`app.engagement.highlightsReport.sum_time_viewed`)}:&nbsp;${ReportHelper.numberOrZero(String(value), false)}</span>`
           },
-          'unique_known_users': {
+          'avg_time_viewed': {
             format: value => value,
             colors: [getPrimaryColor('viewers'), getSecondaryColor('viewers')],
-            graphTooltip: (value) => `<span class="kValue">${this._translate.instant(`app.engagement.highlightsReport.unique_known_users`)}:&nbsp;${ReportHelper.numberOrZero(String(value), false)}</span>`
+            graphTooltip: (value) => `<span class="kValue">${this._translate.instant(`app.engagement.highlightsReport.avg_time_viewed`)}:&nbsp;${ReportHelper.numberOrZero(String(value), false)}</span>`
           },
-          'avg_view_drop_off': {
+          'count_loads': {
             format: value => value,
-            parse: value => parseFloat(value) * 100,
+            parse: value => parseFloat(value),
             colors: [getPrimaryColor('dropoff'), getSecondaryColor('dropoff')],
-            graphTooltip: (value) => `<span class="kValue">${this._translate.instant(`app.engagement.highlightsReport.avg_view_drop_off`)}:&nbsp;${value}%</span>`
+            graphTooltip: (value) => `<span class="kValue">${this._translate.instant(`app.engagement.highlightsReport.count_loads`)}:&nbsp;${value}</span>`
           },
         }
       },
@@ -55,7 +55,13 @@ export class HighlightsConfig extends ReportDataBaseConfig {
           'sum_time_viewed': {
             format: value => ReportHelper.numberOrZero(value),
           },
-          'unique_known_users': {
+          'avg_time_viewed': {
+            format: value => ReportHelper.numberOrZero(value),
+          },
+          'count_loads': {
+            format: value => ReportHelper.numberOrZero(value),
+          },
+          'load_play_ratio': {
             format: value => ReportHelper.numberOrZero(value),
           },
           'avg_view_drop_off': {
@@ -79,17 +85,17 @@ export class HighlightsConfig extends ReportDataBaseConfig {
             units: value => 'min',
             sortOrder: 2,
           },
-          'unique_known_users': {
+	  'avg_time_viewed': {
             format: value => ReportHelper.integerOrZero(value),
-            title: this._translate.instant(`app.engagement.highlightsReport.unique_known_users`),
-            tooltip: this._translate.instant(`app.engagement.highlightsReport.unique_known_users_tt`),
+            title: this._translate.instant(`app.engagement.highlightsReport.avg_time_viewed`),
+            tooltip: this._translate.instant(`app.engagement.highlightsReport.avg_time_viewed_tt`),
             sortOrder: 3,
-          },
-          'avg_view_drop_off': {
+	    },
+          'count_loads': {
             format: value => ReportHelper.numberOrZero(String(value * 100)),
             units: value => '%',
-            title: this._translate.instant(`app.engagement.highlightsReport.avg_view_drop_off`),
-            tooltip: this._translate.instant(`app.engagement.highlightsReport.avg_view_drop_off_tt`),
+            title: this._translate.instant(`app.engagement.highlightsReport.count_loads`),
+            tooltip: this._translate.instant(`app.engagement.highlightsReport.count_loads`),
             sortOrder: 4,
           }
         }

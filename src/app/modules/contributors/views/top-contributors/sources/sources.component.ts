@@ -36,7 +36,7 @@ export class ContributorsSourcesComponent extends TopContributorsBaseReportCompo
   public _isCompareMode: boolean;
   public _columns: string[] = [];
   public _compareFirstTimeLoading = true;
-  public _reportType = KalturaReportType.topSources;
+  public _reportType = KalturaReportType.applications;
   public _barChartData: any = {};
   public _selectedMetrics: string;
   public _tabsData: Tab[] = [];

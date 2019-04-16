@@ -17,15 +17,15 @@ export class EndUserStorageDataConfig extends ReportDataBaseConfig {
     return {
       [ReportDataSection.graph]: {
         fields: {
-          'total_storage_mb': {
+          'added_storage_mb': {
             format: value => value,
             graphTooltip: (value) => `<span class="kValue">${ReportHelper.numberOrZero(String(value), false)}</span>&nbsp;MB`,
           },
-          'total_entries': {
+          'added_entries': {
             format: value => value,
             colors: [getPrimaryColor('entries'), getSecondaryColor('entries')],
           },
-          'total_msecs': {
+          'added_msecs': {
             format: value => Math.round(value / 60000),
             colors: [getPrimaryColor('time'), getSecondaryColor('time')],
             graphTooltip: (value) => `<span class="kValue">${ReportHelper.numberOrZero(String(value), false)}</span>&nbsp;Min`,

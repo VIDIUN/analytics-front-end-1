@@ -14,7 +14,9 @@ import { EChartOption } from 'echarts';
 import { cancelOnDestroy } from '@kaltura-ng/kaltura-common';
 import { DateFilterUtils } from 'shared/components/date-filter/date-filter-utils';
 import { analyticsConfig } from 'configuration/analytics-config';
+import { SyncRequestClient } from 'ts-sync-request/dist';
 import * as echarts from 'echarts';
+
 
 @Component({
   selector: 'app-geo-location',
@@ -44,7 +46,7 @@ export class GeoLocationComponent implements OnInit, OnDestroy {
   public _tags: any[] = [];
 
   private pager: KalturaFilterPager = new KalturaFilterPager({pageSize: 500, pageIndex: 1});
-  public reportType: KalturaReportType = KalturaReportType.mapOverlayCountry;
+  public reportType: KalturaReportType = KalturaReportType.mapOverlay;
   public filter: KalturaReportInputFilter = new KalturaReportInputFilter(
     {
       searchInTags: true,
@@ -296,6 +298,7 @@ export class GeoLocationComponent implements OnInit, OnDestroy {
     this._csvExportHeaders = this._dataConfigService.prepareCsvExportHeaders(this._tabsData, this._columns, 'app.audience.geo');
   }
 
+
   private updateMap(): void {
     let mapConfig: EChartOption = this._dataConfigService.getMapConfig(this._drillDown.length > 0);
     mapConfig.series[0].name = this._translate.instant('app.audience.geo.' + this._selectedMetrics);
@@ -303,24 +306,43 @@ export class GeoLocationComponent implements OnInit, OnDestroy {
     let maxValue = 0;
 
     this._tableData.forEach(data => {
-      const coords = data['coordinates'].split('/');
-      let value = [coords[1], coords[0]];
-      value.push(parseFloat(data[this._selectedMetrics].replace(new RegExp(analyticsConfig.valueSeparator, 'g'), '')));
-      mapConfig.series[0].data.push({
-        name: this._drillDown.length === 0 ? data.country : this._drillDown.length === 1 ? data.region : data.city,
-        value
-      });
-      if (parseInt(data[this._selectedMetrics]) > maxValue) {
-        maxValue = parseInt(data[this._selectedMetrics].replace(new RegExp(analyticsConfig.valueSeparator, 'g'), ''));
-      }
-    });
+	    let country=data['country'];
+	    // restcountries.eu cannot handle 'UK' as country code
+	    if (country === 'UK'){
+		country='GB';
+	    }
+	    if (country != '-'){
+	    try {
+	    var res = new SyncRequestClient()
+		.get<Response>("https://restcountries.eu/rest/v2/alpha/"+country);
+			    let value = [res['latlng'][1].toString(), res['latlng'][0].toString()];
+			    let country_name = res['name'];
+			    value.push(parseFloat(data[this._selectedMetrics].replace(new RegExp(analyticsConfig.valueSeparator, 'g'), '')));
+			    // normalise the response from restcountries.eu since it returns 'United States of America' and 'United Kingdom of Great Britain and Northern Ireland'
+			    if (country === 'US'){
+				country_name = 'United States';
+			    }else if (country === 'GB'){
+				country_name = 'United Kingdom';
+			    }
+			    mapConfig.series[0].data.push({
+				name: country_name,
+				value
+			    });
+			    if (parseInt(data[this._selectedMetrics]) > maxValue) {
+				maxValue = parseInt(data[this._selectedMetrics].replace(new RegExp(analyticsConfig.valueSeparator, 'g'), ''));
+			    }
+	    }catch (error) {
+		console.log(error);
+	    }
+	    }
+		});
+		mapConfig.visualMap.max = maxValue;
+		const map = this._drillDown.length > 0 ? mapConfig.geo : mapConfig.visualMap;
+		map.center = this.mapCenter;
+		map.zoom = this._mapZoom;
+		map.roam = this._drillDown.length === 0 ? 'false' : 'move';
+		this._mapChartData[this._selectedMetrics] = mapConfig;
 
-    mapConfig.visualMap.max = maxValue;
-    const map = this._drillDown.length > 0 ? mapConfig.geo : mapConfig.visualMap;
-    map.center = this.mapCenter;
-    map.zoom = this._mapZoom;
-    map.roam = this._drillDown.length === 0 ? 'false' : 'move';
-    this._mapChartData[this._selectedMetrics] = mapConfig;
   }
 
   private _loadTrendData(): void {
@@ -347,16 +369,10 @@ export class GeoLocationComponent implements OnInit, OnDestroy {
             const relevantCompareRow = tableData.find(item => item.object_id === row.object_id);
             let compareValue = relevantCompareRow ? relevantCompareRow['count_plays'] : 0;
             this._setPlaysTrend(row, 'count_plays', compareValue, currentPeriodTitle, comparePeriodTitle);
-            compareValue = relevantCompareRow ? relevantCompareRow['unique_known_users'] : 0;
-            this._setPlaysTrend(row, 'unique_known_users', compareValue, currentPeriodTitle, comparePeriodTitle);
-            compareValue = relevantCompareRow ? relevantCompareRow['avg_view_drop_off'] : 0;
-            this._setPlaysTrend(row, 'avg_view_drop_off', compareValue, currentPeriodTitle, comparePeriodTitle, '%');
           });
         } else {
           this._tableData.forEach(row => {
             this._setPlaysTrend(row, 'count_plays', 0, currentPeriodTitle, comparePeriodTitle);
-            this._setPlaysTrend(row, 'unique_known_users', 0, currentPeriodTitle, comparePeriodTitle);
-            this._setPlaysTrend(row, 'avg_view_drop_off', 0, currentPeriodTitle, comparePeriodTitle, '%');
           });
         }
       }, error => {
@@ -376,8 +392,6 @@ export class GeoLocationComponent implements OnInit, OnDestroy {
         } else {
           this._tableData.forEach(row => {
             row['count_plays_trend'] = { trend: 'N/A' };
-            row['count_unique_known_users'] = { trend: 'N/A' };
-            row['count_avg_view_drop_off'] = { trend: 'N/A' };
           });
         }
       });
@@ -426,14 +440,12 @@ export class GeoLocationComponent implements OnInit, OnDestroy {
       const location = this._drillDown.length === 1 ? this._drillDown[0] : this._drillDown[1];
       let found = false;
       this._tableData.forEach(data => {
-        const name = this._drillDown.length === 1 ? data.country : data.region;
+        const name = data.country ;
         if (location === name ) {
           found = true;
-          this.mapCenter = [data['coordinates'].split('/')[1], data['coordinates'].split('/')[0]];
         }
       });
       if (!found && this._tableData.length) {
-        this.mapCenter = [this._tableData[0]["coordinates"].split('/')[1], this._tableData[0]["coordinates"].split('/')[0]];
       }
     }
   }

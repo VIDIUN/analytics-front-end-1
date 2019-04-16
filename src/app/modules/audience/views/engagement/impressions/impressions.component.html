@@ -1,4 +1,4 @@
-<div class="kReport kOverrideFAIcons kImpressions">
+<!--div class="kReport kOverrideFAIcons kImpressions">
   <div class="kFilters">
     <span class="kTitle">{{'app.engagement.impressions' | translate}}</span>
   </div>
@@ -10,10 +10,6 @@
         <div>{{_currentDates}}</div>
       </div>
       <div class="kData" *ngIf="_chartLoaded" [class.compare]="isCompareMode">
-        <div class="kDataContainer">
-          <span class="kValue" *ngIf="!isCompareMode">{{_funnelData.impressions | numberFormat}}</span>
-          <span class="kLabel" [class.compare]="isCompareMode">{{'app.engagement.playerImpressions' | translate}}</span>
-        </div>
         <div class="kDataContainer">
           <span class="kValue" *ngIf="!isCompareMode">{{_funnelData.plays | numberFormat}}</span>
           <span class="kLabel" [class.compare]="isCompareMode">{{'app.engagement.plays' | translate}}</span>
@@ -41,5 +37,5 @@
     </div>
 
   </k-area-blocker>
-</div>
+</div-->
 

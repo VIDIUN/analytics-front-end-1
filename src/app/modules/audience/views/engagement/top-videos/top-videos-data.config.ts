@@ -9,7 +9,6 @@ export class TopVideosDataConfig extends ReportDataBaseConfig {
   constructor(_translate: TranslateService) {
     super(_translate);
   }
-
   public getConfig(): ReportDataConfig {
     return {
       [ReportDataSection.table]: {
@@ -22,25 +21,29 @@ export class TopVideosDataConfig extends ReportDataBaseConfig {
             format: value => value,
             sortOrder: 1,
           },
-          'creator_name': {
+          'count_plays': {
             format: value => value,
             sortOrder: 2,
           },
-           'created_at': {
+           'sum_time_viewed': {
              format: value => ReportHelper.format('serverDate', value),
             sortOrder: 3,
           },
-          'count_plays': {
+          'avg_time_viewed': {
             format: value => ReportHelper.numberOrZero(value),
             sortOrder: 4,
           },
-          'unique_known_users': {
+          'count_loads': {
             format: value => ReportHelper.numberOrZero(value),
-            sortOrder: 5,
+            sortOrder: 6,
+          },
+          'load_play_ratio': {
+            format: value => ReportHelper.numberOrZero(value),
+            sortOrder: 7,
           },
           'avg_view_drop_off': {
-            format: value => ReportHelper.percents(value),
-            sortOrder: 4,
+            format: value => ReportHelper.numberOrZero(value),
+            sortOrder: 8,
           },
         }
       }

@@ -15,8 +15,12 @@ export class MiniPeakDayConfig extends ReportDataBaseConfig {
     return {
       [ReportDataSection.table]: {
         fields: {
-          'date_id': {
-            format: value => DateFilterUtils.formatMonthDayString(value, analyticsConfig.locale),
+          'name': {
+            format: value => value,
+            nonComparable: true,
+          },
+          'unique_videos': {
+            format: value => ReportHelper.numberOrZero(value),
             nonComparable: true,
           },
           'count_plays': {
@@ -25,7 +29,16 @@ export class MiniPeakDayConfig extends ReportDataBaseConfig {
           'sum_time_viewed': {
             format: value => ReportHelper.numberOrZero(value),
           },
-          'unique_known_users': {
+          'avg_time_viewed': {
+            format: value => ReportHelper.numberOrZero(value),
+          },
+          'avg_view_drop_off': {
+            format: value => ReportHelper.numberOrZero(value),
+          },
+          'count_loads': {
+            format: value => ReportHelper.numberOrZero(value),
+          },
+          'load_play_ratio': {
             format: value => ReportHelper.numberOrZero(value),
           }
         }
