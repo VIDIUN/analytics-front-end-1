@@ -28,11 +28,16 @@ import { AreaBlockerMessage } from '@kaltura-ng/kaltura-ui';
 import { ErrorsManagerService } from 'shared/services';
 import { TranslateService } from '@ngx-translate/core';
 import { DateFilterUtils } from 'shared/components/date-filter/date-filter-utils';
+import { ExportItem } from 'shared/components/export-csv/export-csv.component';
+import { EntryExportConfig } from './entry-export.config';
 
 @Component({
   selector: 'app-entry',
   templateUrl: './entry-view.component.html',
-  styleUrls: ['./entry-view.component.scss']
+  styleUrls: ['./entry-view.component.scss'],
+  providers: [
+    EntryExportConfig,
+  ]
 })
 export class EntryViewComponent implements OnInit, OnDestroy {
   public _loadingEntry = false;
@@ -40,7 +45,6 @@ export class EntryViewComponent implements OnInit, OnDestroy {
   public _selectedRefineFilters: RefineFilter = null;
   public _dateRange = DateRanges.Last30D;
   public _timeUnit = KalturaReportInterval.days;
-  public _csvExportHeaders = '';
   public _totalCount: number;
   public _reportType: KalturaReportType = KalturaReportType.userUsage;
   public _selectedMetrics: string;
@@ -48,6 +52,7 @@ export class EntryViewComponent implements OnInit, OnDestroy {
   public _refineFilter: RefineFilter = null;
   public _refineFilterOpened = false;
   public _blockerMessage: AreaBlockerMessage = null;
+  public _exportConfig: ExportItem[] = [];
   public _filter: KalturaReportInputFilter = new KalturaReportInputFilter(
     {
       searchInTags: true,
@@ -70,7 +75,10 @@ export class EntryViewComponent implements OnInit, OnDestroy {
               private _translate: TranslateService,
               private _kalturaClient: KalturaClient,
               private _errorsManager: ErrorsManagerService,
-              private _frameEventManager: FrameEventManagerService) { }
+              private _frameEventManager: FrameEventManagerService,
+              private _exportConfigService: EntryExportConfig) {
+    this._exportConfig = _exportConfigService.getConfig();
+  }
 
   ngOnInit() {
     if (analyticsConfig.isHosted) {
@@ -123,17 +131,18 @@ export class EntryViewComponent implements OnInit, OnDestroy {
         .setRequestOptions({
           responseProfile: new KalturaDetachedResponseProfile({
             type: KalturaResponseProfileType.includeFields,
-            fields: 'name,mediaType,createdAt,msDuration'
+            fields: 'name,mediaType,createdAt,msDuration,userId'
           })
         }),
       new UserGetAction({ userId: null })
+        .setDependency(['userId', 0, 'userId'])
         .setRequestOptions(
           new KalturaRequestOptions({
             responseProfile: new KalturaDetachedResponseProfile({
               type: KalturaResponseProfileType.includeFields,
               fields: 'id,fullName'
             })
-          }).setDependency(['userId', 0, 'userId'])
+          })
         )
     );
 
@@ -143,7 +152,19 @@ export class EntryViewComponent implements OnInit, OnDestroy {
         cancelOnDestroy(this),
         map((responses: KalturaMultiResponse) => {
           if (responses.hasErrors()) {
-            throw Error(responses.reduce((acc, val) => `${acc}\n${val.error ? val.error.message : ''}`, ''));
+            const err =  Error(responses.reduce((acc, val) => `${acc}\n${val.error ? val.error.message : ''}`, ''));
+            this.requestSubscription = null;
+
+            this._blockerMessage = new AreaBlockerMessage({
+              title: this._translate.instant('app.common.error'),
+              message: err.message,
+              buttons: [{
+                label: this._translate.instant('app.common.ok'),
+                action: () => {
+                  this._blockerMessage = null;
+                  this._loadingEntry = false;
+                }}]
+            });
           }
   
           return [responses[0].result, responses[1].result] as [KalturaMediaEntry, KalturaUser];
