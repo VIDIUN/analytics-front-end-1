@@ -11,11 +11,14 @@
 
 
 <kPopupWidget #datesPopup [attr.data-aid]="'date-filter-' + name"
-              [popupWidth]="420" [closeBtn]="false" [targetRef]="datesBtn" [targetOffset]="{'x':-210, 'y': 42}">
+              [popupWidth]="isLiveFilter ? 200 : 420"
+              [closeBtn]="false"
+              [targetRef]="datesBtn"
+              [targetOffset]="_popupTargetOffset">
   <ng-template>
-    <div class="kDateFilterPopup kOverrideFAIcons">
+    <div class="kDateFilterPopup kOverrideFAIcons" [class.kLive]="isLiveFilter">
 
-      <div class="kViews">
+      <div *ngIf="!isLiveFilter" class="kViews">
         <p-selectButton [options]="viewItems" [(ngModel)]="selectedView" (ngModelChange)="resetCompare()"></p-selectButton>
       </div>
       <div class="kFilters kPreset" *ngIf="selectedView==='preset'">
@@ -23,7 +26,7 @@
           <span class="kTitle">{{'app.dateFilter.last' | translate | uppercase}}</span>
           <p-radioButton *ngFor="let _dateRangeLast of lastDateRangeItems" name="dates" [label]="_dateRangeLast.label" [value]="_dateRangeLast.value.val" [kTooltip]="_dateRangeLast.value.tooltip" [placement]="'left'" [(ngModel)]="selectedDateRange" (onClick)="updateCompareMax(); resetCompare()"></p-radioButton>
         </div>
-        <div class="col">
+        <div class="col" *ngIf="!isLiveFilter">
           <span class="kTitle">{{'app.dateFilter.current' | translate | uppercase}}</span>
           <p-radioButton *ngFor="let _dateRangeCurrent of currDateRangeItems" name="dates" [label]="_dateRangeCurrent.label" [value]="_dateRangeCurrent.value.val" [kTooltip]="_dateRangeCurrent.value.tooltip" [placement]="'right'" [(ngModel)]="selectedDateRange" (onClick)="updateCompareMax(); resetCompare()"></p-radioButton>
         </div>

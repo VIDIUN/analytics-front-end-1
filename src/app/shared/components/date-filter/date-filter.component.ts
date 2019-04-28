@@ -41,6 +41,8 @@ export class DateFilterComponent implements OnInit, OnDestroy {
   @Input() showCompare = true;
   
   @Input() creationDate: moment.Moment = null;
+  
+  @Input() isLiveFilter = false;
 
   @Output() filterChange: EventEmitter<DateChangeEvent> = new EventEmitter();
   
@@ -48,6 +50,7 @@ export class DateFilterComponent implements OnInit, OnDestroy {
   public _defaultDateRange = DateRanges.CurrentYear;
   public _dateRangeType = this._defaultDateRageType;
   public _dateRange = this._defaultDateRange;
+  public _popupTargetOffset = { 'x': -210, 'y': 42 };
 
   public lastDateRangeItems: SelectItem[] = [];
   public currDateRangeItems: SelectItem[] = [];
@@ -105,7 +108,9 @@ export class DateFilterComponent implements OnInit, OnDestroy {
       this._init(params);
     }
     
-    
+    if (this.isLiveFilter) {
+      this._popupTargetOffset = { 'x': 0, 'y': 42 };
+    }
   }
   
   ngOnDestroy() {
@@ -115,8 +120,13 @@ export class DateFilterComponent implements OnInit, OnDestroy {
   private _init(queryParams: Params): void {
     this._browserService.updateCurrentQueryParams(queryParams);
     this._initCurrentFilterFromEventParams(queryParams);
-    this.lastDateRangeItems = this._dateFilterService.getDateRange(this._dateRangeType, 'last', this.creationDate);
-    this.currDateRangeItems = this._dateFilterService.getDateRange(this._dateRangeType, 'current');
+    if (this.isLiveFilter) {
+      this.lastDateRangeItems = this._dateFilterService.getDateRange(DateRangeType.ShortTerm, 'last');
+    } else {
+      this.lastDateRangeItems = this._dateFilterService.getDateRange(this._dateRangeType, 'last', this.creationDate);
+      this.currDateRangeItems = this._dateFilterService.getDateRange(this._dateRangeType, 'current');
+    }
+    
     this.selectedDateRange = this.lastSelectedDateRange = this._dateRange;
     setTimeout( () => {
       this.updateDataRanges(); // use a timeout to allow data binding to complete
@@ -202,7 +212,7 @@ export class DateFilterComponent implements OnInit, OnDestroy {
   public updateDataRanges(): void {
     this.lastSelectedDateRange = this.selectedDateRange;
     if (this.selectedView === 'preset') {
-      const dates = this._dateFilterService.getDateRangeDetails(this.selectedDateRange, this.creationDate);
+      const dates = this._dateFilterService.getDateRangeDetails(this.selectedDateRange, this.isLiveFilter, this.creationDate);
       this.startDate = dates.startDate;
       this.endDate = dates.endDate;
       this._dateRangeLabel = dates.label;
@@ -270,6 +280,7 @@ export class DateFilterComponent implements OnInit, OnDestroy {
       endDay: DateFilterUtils.getDay(this.endDate),
       timeUnits: this.selectedTimeUnit,
       timeZoneOffset: DateFilterUtils.getTimeZoneOffset(),
+      dateRange: this.selectedDateRange,
       compare: {
         active: this.compare,
         startDate: DateFilterUtils.toServerDate(this.compareStartDate, true),

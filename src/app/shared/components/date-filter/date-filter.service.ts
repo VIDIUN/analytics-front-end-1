@@ -5,7 +5,20 @@ import { KalturaReportInterval } from 'kaltura-ngx-client';
 import * as moment from 'moment';
 import { DateFilterUtils } from 'shared/components/date-filter/date-filter-utils';
 
+export enum TimeRanges {
+  TenSeconds = 'TenSeconds',
+  Minute = 'Minute',
+  Hour = 'Hour',
+  Day = 'Day',
+}
+
 export enum DateRanges {
+  LastHour = 'lastHour',
+  Last3H = 'last3hours',
+  Last6H = 'last6hours',
+  Last12H = 'last12hours',
+  Last24H = 'last24hours',
+  Last3D = 'last3days',
   Last7D = 'last7days',
   Last30D = 'last30days',
   Last3M = 'last3months',
@@ -39,6 +52,7 @@ export type DateChangeEvent = {
   timeZoneOffset: number;
   applyIn?: string;
   changeOnly?: string;
+  dateRange?: DateRanges;
   compare: {
     active: boolean;
     startDate: number;
@@ -56,6 +70,18 @@ export class DateFilterService {
   
   public getDateRangeByString(value: string): DateRanges {
     switch (value) {
+      case 'lastHour':
+        return DateRanges.LastHour;
+      case 'last3hours':
+        return DateRanges.Last3H;
+      case 'last6hours':
+        return DateRanges.Last6H;
+      case 'last12hours':
+        return DateRanges.Last12H;
+      case 'last24hours':
+        return DateRanges.Last24H;
+      case 'last3days':
+        return DateRanges.Last3D;
       case 'last7days':
         return DateRanges.Last7D;
       case 'last30days':
@@ -79,6 +105,31 @@ export class DateFilterService {
       default:
         return null;
     }
+  }
+  
+  public getTimeRangeList(dateRange: DateRanges): SelectItem[] {
+    return [
+      {
+        value: TimeRanges.TenSeconds,
+        label: this._translate.instant('app.dateFilter.10sec'),
+        disabled: dateRange !== DateRanges.LastHour,
+      },
+      {
+        value: TimeRanges.Minute,
+        label: this._translate.instant('app.dateFilter.minutes'),
+        disabled: [DateRanges.Last3H, DateRanges.Last6H, DateRanges.Last12H].indexOf(dateRange) === -1,
+      },
+      {
+        value: TimeRanges.Hour,
+        label: this._translate.instant('app.dateFilter.hours'),
+        disabled: dateRange === DateRanges.LastHour,
+      },
+      {
+        value: TimeRanges.Day,
+        label: this._translate.instant('app.dateFilter.days'),
+        disabled: [DateRanges.Last3D, DateRanges.Last7D].indexOf(dateRange) === -1,
+      },
+    ];
   }
   
 
@@ -132,6 +183,36 @@ export class DateFilterService {
         }
         break;
       case DateRangeType.ShortTerm:
+        if (period === 'last') {
+          selectItemArr.push({
+            label: this._translate.instant('app.dateFilter.hour'),
+            value: { val: DateRanges.LastHour, tooltip: this.getDateRangeDetails(DateRanges.LastHour, true).label }
+          });
+          selectItemArr.push({
+            label: this._translate.instant('app.dateFilter.3hours'),
+            value: { val: DateRanges.Last3H, tooltip: this.getDateRangeDetails(DateRanges.Last3H, true).label }
+          });
+          selectItemArr.push({
+            label: this._translate.instant('app.dateFilter.6hours'),
+            value: { val: DateRanges.Last6H, tooltip: this.getDateRangeDetails(DateRanges.Last6H, true).label }
+          });
+          selectItemArr.push({
+            label: this._translate.instant('app.dateFilter.12hours'),
+            value: { val: DateRanges.Last12H, tooltip: this.getDateRangeDetails(DateRanges.Last12H, true).label }
+          });
+          selectItemArr.push({
+            label: this._translate.instant('app.dateFilter.24hours'),
+            value: { val: DateRanges.Last24H, tooltip: this.getDateRangeDetails(DateRanges.Last24H, true).label }
+          });
+          selectItemArr.push({
+            label: this._translate.instant('app.dateFilter.3days'),
+            value: { val: DateRanges.Last3D, tooltip: this.getDateRangeDetails(DateRanges.Last3D, true).label }
+          });
+          selectItemArr.push({
+            label: this._translate.instant('app.dateFilter.7days'),
+            value: { val: DateRanges.Last7D, tooltip: this.getDateRangeDetails(DateRanges.Last7D, true).label }
+          });
+        }
         break;
       default:
         break;
@@ -140,16 +221,53 @@ export class DateFilterService {
     return selectItemArr;
   }
 
-  public getDateRangeDetails(selectedDateRange: DateRanges, creationDate?: moment.Moment): { startDate: Date,  endDate: Date, label: string} {
+  public getDateRangeDetails(selectedDateRange: DateRanges, staticLabel = false, creationDate?: moment.Moment): { startDate: Date,  endDate: Date, label: string} {
     const today: Date = new Date();
     const m = moment();
     const yesterday = m.subtract(1, 'days').toDate();
     let startDate, endDate: Date;
+    let label: string;
 
     switch (selectedDateRange) {
+      case DateRanges.LastHour:
+        startDate = m.subtract(1, 'hours').toDate();
+        endDate = m.toDate();
+        label = this._translate.instant('app.dateFilter.lastHour');
+        break;
+      case DateRanges.Last3H:
+        startDate = m.subtract(3, 'hours').toDate();
+        endDate = m.toDate();
+        label = this._translate.instant('app.dateFilter.last3hours');
+        break;
+      case DateRanges.Last6H:
+        startDate = m.subtract(6, 'hours').toDate();
+        endDate = m.toDate();
+        label = this._translate.instant('app.dateFilter.last6hours');
+        break;
+      case DateRanges.Last12H:
+        startDate = m.subtract(12, 'hours').toDate();
+        endDate = m.toDate();
+        label = this._translate.instant('app.dateFilter.last12hours');
+        break;
+      case DateRanges.Last24H:
+        startDate = m.subtract(24, 'hours').toDate();
+        endDate = m.toDate();
+        label = this._translate.instant('app.dateFilter.last24hours');
+        break;
+      case DateRanges.Last3D:
+        startDate = m.subtract(3, 'days').toDate();
+        endDate = m.toDate();
+        label = this._translate.instant('app.dateFilter.last3days');
+        break;
       case DateRanges.Last7D:
-        startDate = m.subtract(6, 'days').toDate();
-        endDate = yesterday;
+        if (staticLabel) {
+          startDate = m.subtract(7, 'days').toDate();
+          endDate = m.toDate();
+          label = this._translate.instant('app.dateFilter.last7days');
+        } else {
+          startDate = m.subtract(6, 'days').toDate();
+          endDate = yesterday;
+        }
         break;
       case DateRanges.Last30D:
         startDate = m.subtract(29, 'days').toDate();
@@ -188,8 +306,11 @@ export class DateFilterService {
         }
         break;
     }
-    const label = DateFilterUtils.getMomentDate(startDate).format('MMM D, YYYY') + ' - ' + DateFilterUtils.getMomentDate(endDate).format('MMM D, YYYY');
-    return { startDate, endDate, label};
+    if (!staticLabel) {
+      label = DateFilterUtils.getMomentDate(startDate).format('MMM D, YYYY') + ' - ' + DateFilterUtils.getMomentDate(endDate).format('MMM D, YYYY');
+    }
+
+    return { startDate, endDate, label };
   }
 
   public getMaxCompare(startDate: Date, endDate: Date): Date;
