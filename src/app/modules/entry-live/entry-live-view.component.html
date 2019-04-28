@@ -14,11 +14,16 @@
         <app-entry-details [entry]="_entry" (navigateToEntry)="_navigateToEntry()"></app-entry-details>
         <div class="kEntryWidgets">
           <div class="kWideColumn">
-            cool widgets enter here
+            <div class="kStub kBlue kNarrow"></div>
+            <div class="kStub"></div>
+            <div class="kStub"></div>
           </div>
-          <div class="kNarrowColumn">
+          <div class="kNarrowColumn kWhite">
             <app-live-player [entryId]="_entry?.id"></app-live-player>
           </div>
+        </div>
+        <div class="kReportContainer">
+          <div class="kStub kWide"></div>
         </div>
       </div>
     </div>

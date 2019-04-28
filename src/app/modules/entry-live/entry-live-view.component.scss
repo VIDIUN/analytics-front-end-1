@@ -31,6 +31,8 @@
 
 .kEntryWidgets {
   display: flex;
+  margin-bottom: 30px;
+
   .kWideColumn{
     width: 67%;
     display: flex;
@@ -44,5 +46,34 @@
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
     overflow: hidden;
+  }
+}
+
+.kWhite {
+  background-color: #FFFFFF !important;
+}
+
+.kBlue {
+  background-color: #487adf !important;
+}
+
+.kStub {
+  width: 100%;
+  height: 207px;
+  border-radius: 3px;
+  background-color: #FFFFFF;
+  margin-bottom: 30px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &.kNarrow {
+    height: 62px;
+  }
+
+  &.kWide {
+    height: 1200px;
+    margin-bottom: 30px;
   }
 }
