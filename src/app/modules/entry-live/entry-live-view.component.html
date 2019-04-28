@@ -23,7 +23,15 @@
           </div>
         </div>
         <div class="kReportContainer">
-          <div class="kStub kWide"></div>
+          <div class="kStub kWide">
+            <div class="kHeader">
+              <span class="kTitle">All Users</span>
+              <div class="kDateFilter">
+                <app-date-filter name="all-users" (filterChange)="_onDateFilterChange($event)"></app-date-filter>
+                <p-selectButton [options]="_timeRanges" [(ngModel)]="_selectedTimeRange"></p-selectButton>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

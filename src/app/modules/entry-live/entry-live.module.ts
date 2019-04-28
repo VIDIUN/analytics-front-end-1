@@ -15,6 +15,7 @@ import { AreaBlockerModule, KalturaUIModule, TagsModule, TooltipModule } from '@
 import { TableModule } from 'primeng/table';
 import { EntryDetailsComponent } from './views/entry-details/entry-details.component';
 import { LivePlayerComponent } from './views/live-player/live-player.component';
+import { SelectButtonModule } from 'primeng/primeng';
 
 
 @NgModule({
@@ -33,6 +34,7 @@ import { LivePlayerComponent } from './views/live-player/live-player.component';
     NgxEchartsModule,
     RouterModule.forChild(routing),
     KalturaUIModule,
+    SelectButtonModule,
   ],
   declarations: [
     EntryLiveViewComponent,

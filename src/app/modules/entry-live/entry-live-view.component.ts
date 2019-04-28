@@ -19,11 +19,20 @@ import { cancelOnDestroy } from '@kaltura-ng/kaltura-common';
 import { filter, map, switchMap } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ErrorsManagerService } from 'shared/services';
+import { SelectItem } from 'primeng/api';
+import { DateChangeEvent } from 'shared/components/date-filter/date-filter.service';
 
 export interface KalturaExtendedLiveEntry extends KalturaLiveEntry {
   dvr: boolean;
   recording: boolean;
   transcoding: boolean;
+}
+
+export enum TimeRanges {
+  TenSeconds = 'TenSeconds',
+  Minute = 'Minute',
+  Hour = 'Hour',
+  Day = 'Day'
 }
 
 @Component({
@@ -36,6 +45,13 @@ export class EntryLiveViewComponent implements OnInit, OnDestroy {
   public _blockerMessage: AreaBlockerMessage;
   public _entryId: string;
   public _entry: KalturaExtendedLiveEntry;
+  public _selectedTimeRange = TimeRanges.TenSeconds;
+  public _timeRanges: SelectItem[] = [
+    { value: TimeRanges.TenSeconds, label: '10 Sec'},
+    { value: TimeRanges.Minute, label: 'Minutes'},
+    { value: TimeRanges.Hour, label: 'Hours'},
+    { value: TimeRanges.Day, label: 'Days'},
+  ];
   
   constructor(private _frameEventManager: FrameEventManagerService,
               private _errorsManager: ErrorsManagerService,
@@ -132,5 +148,9 @@ export class EntryLiveViewComponent implements OnInit, OnDestroy {
     } else {
       this._router.navigate(['audience/engagement'], { queryParams: this._route.snapshot.queryParams });
     }
+  }
+  
+  public _onDateFilterChange(event: DateChangeEvent): void {
+  
   }
 }

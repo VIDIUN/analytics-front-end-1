@@ -76,4 +76,26 @@
     height: 1200px;
     margin-bottom: 30px;
   }
+
+  .kHeader {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 16px 24px;
+
+    .kTitle {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .kDateFilter {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+
+      app-date-filter {
+        margin-bottom: 16px;
+      }
+    }
+  }
 }
