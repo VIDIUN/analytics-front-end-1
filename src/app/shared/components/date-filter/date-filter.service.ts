@@ -159,7 +159,7 @@ export class DateFilterService {
           if (creationDate) {
             selectItemArr.push({
               label: this._translate.instant('app.dateFilter.sinceCreation'),
-              value: {val: DateRanges.SinceCreation, tooltip: this.getDateRangeDetails(DateRanges.SinceCreation, creationDate).label}
+              value: {val: DateRanges.SinceCreation, tooltip: this.getDateRangeDetails(DateRanges.SinceCreation, !!creationDate).label}
             });
           }
         }
