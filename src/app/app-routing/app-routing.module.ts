@@ -15,14 +15,14 @@ const routes: Routes = [
         path: 'entry',
         loadChildren: '../modules/entry/entry.module#EntryModule'
       },
-      {
-        path: 'entry-live/:id',
-        loadChildren: '../modules/entry-live/entry-live.module#EntryLiveModule'
-      },
-      {
-        path: 'entry-live',
-        loadChildren: '../modules/entry-live/entry-live.module#EntryLiveModule'
-      },
+      // {
+      //   path: 'entry-live/:id',
+      //   loadChildren: '../modules/entry-live/entry-live.module#EntryLiveModule'
+      // },
+      // {
+      //   path: 'entry-live',
+      //   loadChildren: '../modules/entry-live/entry-live.module#EntryLiveModule'
+      // },
       {
         path: 'audience',
         loadChildren: '../modules/audience/audience.module#AudienceModule'
