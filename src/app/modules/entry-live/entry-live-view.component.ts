@@ -122,7 +122,7 @@ export class EntryLiveViewComponent implements OnInit, OnDestroy {
         this._liveStreamHealth,
         this._liveGeo,
         this._liveDevices,
-        this._liveDiscovery,
+        // this._liveDiscovery,
         // <-- append new widgets here
       ], { entryId: this._entryId });
     }
