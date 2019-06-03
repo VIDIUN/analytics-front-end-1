@@ -22,6 +22,7 @@ import { LiveGeoWidget, LiveGeoWidgetData } from './live-geo.widget';
 import { KalturaExtendedLiveEntry } from '../../entry-live.service';
 import { analyticsConfig } from 'configuration/analytics-config';
 import { FrameEvents } from 'shared/modules/frame-event-manager/frame-event-manager.service';
+import { parseFormattedValue } from 'shared/utils/parse-fomated-value';
 
 @Component({
   selector: 'app-live-geo',
@@ -117,7 +118,7 @@ export class LiveGeoComponent implements OnInit, OnDestroy {
     this._tableData.forEach(data => {
       const coords = data['coordinates'].split('/');
       let value = [coords[1], coords[0]];
-      value.push(parseFloat(data[this._selectedMetrics].replace(new RegExp(',', 'g'), '')));
+      value.push(parseFormattedValue(data[this._selectedMetrics]));
       mapConfig.series[0].data.push({
         name: this._drillDown.length === 0
           ? getCountryName(data.country, false)
@@ -127,7 +128,7 @@ export class LiveGeoComponent implements OnInit, OnDestroy {
         value
       });
       if (parseInt(data[this._selectedMetrics]) > maxValue) {
-        maxValue = parseInt(data[this._selectedMetrics].replace(new RegExp(',', 'g'), ''));
+        maxValue = parseFormattedValue(data[this._selectedMetrics]);
       }
     });
     
@@ -135,7 +136,7 @@ export class LiveGeoComponent implements OnInit, OnDestroy {
     mapConfig.visualMap.max = maxValue;
     const map = this._drillDown.length > 0 && this._canMapDrillDown ? mapConfig.geo : mapConfig.series[0];
     map.zoom = this._mapZoom;
-    map.center = this._drillDown.length === 0 && this._echartsIntance.getOption().series.length ? this._echartsIntance.getOption().series[0].center : mapCenter;
+    map.center = this._drillDown.length === 0 && this._echartsIntance && this._echartsIntance.getOption().series.length ? this._echartsIntance.getOption().series[0].center : mapCenter;
     map.roam = this._drillDown.length === 0 && this._canMapDrillDown && this._mapZoom === 1.2 ? 'false' : 'move';
     this._mapChartData = mapConfig;
   }
