@@ -1,16 +1,19 @@
 import { Component, Input } from '@angular/core';
 import { EngagementBaseReportComponent } from '../engagement-base-report/engagement-base-report.component';
-import { KalturaEndUserReportInputFilter, KalturaFilterPager, KalturaObjectBaseFactory, KalturaReportInterval, KalturaReportTable, KalturaReportType } from 'kaltura-ngx-client';
+import { KalturaEndUserReportInputFilter, KalturaFilterPager, KalturaObjectBaseFactory, KalturaReportInterval, KalturaReportTable, KalturaReportGraph, KalturaReportType } from 'kaltura-ngx-client';
 import { AreaBlockerMessage, AreaBlockerMessageButton } from '@kaltura-ng/kaltura-ui';
 import { AuthService, ErrorDetails, ErrorsManagerService, Report, ReportConfig, ReportService } from 'shared/services';
 import { map, switchMap } from 'rxjs/operators';
 import { of as ObservableOf } from 'rxjs';
 import { CompareService } from 'shared/services/compare.service';
+import { analyticsConfig } from 'configuration/analytics-config';
 import { ReportDataConfig } from 'shared/services/storage-data-base.config';
 import { TranslateService } from '@ngx-translate/core';
 import { MiniPeakDayConfig } from './mini-peak-day.config';
 import { DateFilterComponent } from 'shared/components/date-filter/date-filter.component';
+import { DateFilterUtils } from 'shared/components/date-filter/date-filter-utils';
 import { FrameEventManagerService } from 'shared/modules/frame-event-manager/frame-event-manager.service';
+import { isEmptyObject } from 'shared/utils/is-empty-object';
 import * as moment from 'moment';
 
 @Component({
@@ -29,9 +32,14 @@ export class MiniPeakDayComponent extends EngagementBaseReportComponent {
   protected _componentId = 'mini-peak-day';
   
   public _isBusy: boolean;
+  public _lineChartDataLoaded = false;
   public _blockerMessage: AreaBlockerMessage = null;
   public _reportInterval = KalturaReportInterval.days;
   public _compareFilter: KalturaEndUserReportInputFilter = null;
+  public _lineChartData = {};
+  public _peakPlays;
+  public _peakDay;
+  public _peakMinutes;
   public _pager = new KalturaFilterPager({ pageSize: 1, pageIndex: 1 });
   public _filter = new KalturaEndUserReportInputFilter({
     searchInTags: true,
@@ -76,8 +84,11 @@ export class MiniPeakDayComponent extends EngagementBaseReportComponent {
           this._peakDayData = null;
 
           if (report.table && report.table.header && report.table.data) {
-            this._handleTable(report.table, compare); // handle table
           }
+            if (report.graphs.length) {
+	    this._lineChartDataLoaded = false;
+	      this._handleGraphs(report.graphs); // handle graphs
+            }
           this._isBusy = false;
         },
         error => {
@@ -144,5 +155,30 @@ export class MiniPeakDayComponent extends EngagementBaseReportComponent {
       this._peakDayData = tableData[0];
     }
   }
+
+  private _handleGraphs(graphs: KalturaReportGraph[]): void {
+    
+	const playsData = graphs[0].data.split(';');
+	let plays = [];
+	let days = [];
+	playsData.forEach((value, index) => {
+	    if (value.length) {
+		days.push(value.split(',')[0]);
+		plays.push(parseInt(value.split(',')[1]));
+	    }
+	});
+	let maxIndex = plays.indexOf(Math.max(...plays));
+	this._peakPlays = plays[maxIndex];
+	this._peakDay = DateFilterUtils.formatMonthDayString(days[maxIndex],analyticsConfig.locale);
+
+	const minutesData = graphs[1].data.split(';');
+	let minutes = [];
+	minutesData.forEach((value, index) => {
+	    if (value.length) {
+		minutes.push(parseFloat(value.split(',')[1]));
+	    }
+	});
+	this._peakMinutes = minutes[maxIndex];
+    }
   
 }

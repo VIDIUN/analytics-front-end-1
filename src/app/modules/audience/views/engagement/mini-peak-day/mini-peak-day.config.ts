@@ -13,6 +13,23 @@ export class MiniPeakDayConfig extends ReportDataBaseConfig {
   
   public getConfig(): ReportDataConfig {
     return {
+      [ReportDataSection.graph]: {
+        fields: {
+          'count_plays': {
+            format: value => value,
+          },
+          'sum_time_viewed': {
+            format: value => value,
+          },
+          'avg_time_viewed': {
+            format: value => value,
+          },
+          'count_loads': {
+            format: value => value,
+            parse: value => parseFloat(value),
+          },
+        }
+      },
       [ReportDataSection.table]: {
         fields: {
           'name': {

@@ -11,18 +11,30 @@ export class MiniHighlightsConfig extends ReportDataBaseConfig {
   
   public getConfig(): ReportDataConfig {
     return {
-      [ReportDataSection.table]: {
+      [ReportDataSection.totals]: {
         fields: {
-          'name': {
-            format: value => value,
-            title: this._translate.instant(`app.contributors.title`),
-            tooltip: this._translate.instant(`app.contributors.contributors_tt`),
-            sortOrder: 1,
-          },
-          'count_total': {
+	/*'count_total': {
             format: value => ReportHelper.numberOrZero(value),
-            title: this._translate.instant(`app.contributors.count_total`),
-            tooltip: this._translate.instant(`app.contributors.count_total`),
+            title: this._translate.instant(`app.contributors.added_entries`),
+            tooltip: this._translate.instant(`app.contributors.added_entries`),
+            sortOrder: 2,
+	    },*/
+          'count_video': {
+            format: value => ReportHelper.numberOrZero(value),
+            title: this._translate.instant(`app.contributors.added_videos`),
+            tooltip: this._translate.instant(`app.contributors.added_videos`),
+            sortOrder: 2,
+          },
+          'count_audio': {
+            format: value => ReportHelper.numberOrZero(value),
+            title: this._translate.instant(`app.contributors.added_audio`),
+            tooltip: this._translate.instant(`app.contributors.added_audio`),
+            sortOrder: 2,
+          },
+          'count_image': {
+            format: value => ReportHelper.numberOrZero(value),
+            title: this._translate.instant(`app.contributors.added_images`),
+            tooltip: this._translate.instant(`app.contributors.added_images`),
             sortOrder: 2,
           },
         }

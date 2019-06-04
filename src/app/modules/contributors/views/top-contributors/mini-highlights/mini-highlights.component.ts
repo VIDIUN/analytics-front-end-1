@@ -165,6 +165,7 @@ export class ContributorsMiniHighlightsComponent extends TopContributorsBaseRepo
   
   private _handleTotals(totals: KalturaReportTotal): void {
     this._tabsData = this._reportService.parseTotals(totals, this._dataConfig.totals);
+    //console.log("ZFP");
   }
   
   public scrollTo(target: string): void {
