@@ -15,7 +15,7 @@
         <div class="kFilter kOverrideFAIcons">
           <div role="button" aria-label="Refine Filter" tabindex="0" class="kDropDown"
                (click)="_refineFilterOpened = !_refineFilterOpened"
-               (keydown.enter)="_refineFilterOpened = !_refineFilterOpened">
+               (keydown.enter)="_refineFilterOpened = !_refineFilterOpened; entryfilter.setFocus(_refineFilterOpened)">
             <span>{{'app.filters.filter' | translate}}</span>
             <i *ngIf="!_refineFilterOpened" class="kIcondropdown_arrow_bottom"></i>
             <i *ngIf="_refineFilterOpened" class="kIcondropdown_arrow_top"></i>
@@ -44,7 +44,7 @@
       </a>
     </div>
 
-    <app-entry-filter [viewConfig]="_viewConfig.refineFilter"
+    <app-entry-filter [viewConfig]="_viewConfig.refineFilter" #entryfilter
                       [opened]="_refineFilterOpened"
                       [dateFilter]="_dateFilter"
                       [selectedFilters]="_selectedRefineFilters"

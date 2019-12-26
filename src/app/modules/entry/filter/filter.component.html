@@ -13,10 +13,10 @@
            (onRemoveAll)="_removeAll()">
     </kTags>
   </div>
-  <div *ngIf="showFilters"
+  <div [class.kHidden]="!showFilters"
        [@state]="_state"
        (@state.done)="_filtersAnimationDone($event)">
-    <div class="kRefineFiltersMain">
+    <div class="kRefineFiltersMain" tabindex="0" #filter>
       <div class="kFilterContainer kOverrideFAIcons">
         <div class="kFilterContainerRow">
           <div class="kFilterContainerCol">
