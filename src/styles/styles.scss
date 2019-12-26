@@ -532,8 +532,13 @@ p-multiselect ::ng-deep {
   }
 }
 
-button, a, tr, td, th, li, [role=button], [role=link], [role=tab], div, p-radiobutton, p-checkbox {
+button, a, tr, td, th, li, [role=button], [role=link], [role=tab], div, p-radiobutton, p-checkbox, p-dropdown {
   &:focus {
+    outline: none !important;
+  }
+}
+button, a, tr, td, th, li, [role=button], [role=link], [role=tab], div, p-radiobutton, p-checkbox, p-dropdown {
+  &.has-focus {
     outline: 5px auto rgba(0, 150, 255, 1) !important;
   }
 }

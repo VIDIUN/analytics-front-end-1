@@ -29,17 +29,17 @@
 
   <div class="kFooter">
     <div class="kActions">
-      <a role="button" tabindex="0"
+      <a role="button" tabindex="0" focusVisible
          (click)="_cancel()"
          (keydown.enter)="_cancel()">
         {{'app.common.cancel' | translate}}
       </a>
-      <button tabindex="0"
+      <button tabindex="0" focusVisible
               class="kButtonBranded" pButton *ngIf="_selectedCategories.length <= 1"
               [disabled]="!_selectedCategories.length"
               [label]="'app.categories.select' | translate"
               (click)="_apply()"></button>
-      <button tabindex="0"
+      <button tabindex="0" focusVisible
               class="kButtonBranded" pButton *ngIf="_selectedCategories.length >= 2"
               [label]="'app.categories.selectCount' | translate:{'0': _selectedCategories.length}"
               (click)="_apply()"></button>

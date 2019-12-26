@@ -41,13 +41,13 @@
               <i class="kFlag" [ngClass]="'kFlag-' + data['object_id']"></i>
             </td>
             <td class="kHighlight">
-              <a tabindex="0" *ngIf="drillDownItems.length === 0"
+              <a tabindex="0" focusVisible *ngIf="drillDownItems.length === 0"
                  role="link"
                  (click)="drillDown(data['country'])"
                  (keydown.enter)="drillDown(data['country'])">
                 {{data['country']}}
               </a>
-              <a tabindex="0" *ngIf="drillDownItems.length === 1"
+              <a tabindex="0" focusVisible *ngIf="drillDownItems.length === 1"
                  role="link"
                  (click)="drillDown(data['region'])"
                  (keydown.enter)="drillDown(data['region'])">
@@ -95,11 +95,11 @@
          (chartInit)="_onChartInit($event)"></div>
     <div class="kZoomWidget">
       <button pButton class="kButtonDefault kZoomOutBtn" icon="icon-minus"
-              role="button" tabindex="0" aria-label="Zoom Out"
+              role="button" tabindex="0" focusVisible aria-label="Zoom Out"
               (click)="_zoom('out')"
               (keydown.enter)="_zoom('out')"></button>
       <button pButton class="kButtonDefault kZoomInBtn" icon="kIconplus"
-              role="button" tabindex="0" aria-label="Zoom In"
+              role="button" tabindex="0" focusVisible aria-label="Zoom In"
               (click)="_zoom('in')"
               (keydown.enter)="_zoom('in')"></button>
     </div>

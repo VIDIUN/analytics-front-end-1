@@ -1,7 +1,7 @@
 <div class="kColumn">
   <div class="kColumnLabel">{{label}}</div>
   <div class="kColumnContent">
-    <a tabindex="0" *ngIf="!_selectedValue.length"
+    <a tabindex="0" focusVisible *ngIf="!_selectedValue.length"
        role="button"
        (click)="_openCategoriesBrowser()"
        (keydown.enter)="_openCategoriesBrowser()">
@@ -9,13 +9,13 @@
     </a>
     <span class="kSelected" *ngIf="_selectedValue.length">
       {{'app.categories.selected' | translate:{'0': _selectedValue.length} }}
-      <a tabindex="0"
+      <a tabindex="0" focusVisible
          role="button"
          (click)="_openCategoriesBrowser()"
          (keydown.enter)="_openCategoriesBrowser()">
         {{'app.categories.change' | translate}}
       </a>
-      <a tabindex="0"
+      <a tabindex="0" focusVisible
          role="button"
          (click)="_updateCategories([])"
          (keydown.enter)="_updateCategories([])">

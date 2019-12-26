@@ -1,4 +1,4 @@
-<div tabindex="0" (keydown.enter)="toggleDropdown()" #main>
+<div tabindex="0" focusVisible (keydown.enter)="toggleDropdown()" #main>
   <ng-container *ngIf="_showComponent">
 
     <ng-container *ngIf="!_singleMode">
@@ -25,7 +25,7 @@
                     [(selection)]="_selected"></p-tree>
 
             <button pButton
-                    tabindex="0"
+                    tabindex="0" focusVisible
                     class="kButtonBranded kExportBtn"
                     [class.kButtonProcess]="_exportingCsv"
                     [class.kDisabled]="_exportingCsv || !_selected.length"

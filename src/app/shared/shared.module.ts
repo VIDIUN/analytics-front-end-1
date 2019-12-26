@@ -25,6 +25,7 @@ import { AreaBlockerModule, InputHelperModule, PopupWidgetModule, TagsModule, To
 import { TimeUnitsComponent } from './components/date-filter/time-units.component';
 import { CompareService } from 'shared/services/compare.service';
 import { NavigationDrillDownService } from 'shared/services/navigation-drilldown.service';
+import { FocusVisibleService } from 'shared/services/focus-visible.service';
 import { TrendPipe } from 'shared/pipes/trend.pipe';
 import { DeviceIconPipe } from 'shared/pipes/device-icon.pipe';
 import { NumberFormatPipe } from 'shared/pipes/number-formatter';
@@ -45,6 +46,7 @@ import { CategoriesSelectorComponent } from 'shared/components/category-filter/c
 import { AutocompleteFilterComponent } from 'shared/components/autocomplete-filter/autocomplete-filter.component';
 import { DropdownFilterComponent } from 'shared/components/dropdown-filter/dropdown-filter.component';
 import { MiddleEllipsisDirective } from 'shared/directives/middle-ellipsis.directive';
+import { FocusVisibleDirective } from 'shared/directives/focus-visible.directive';
 import { components as FilterComponentsList } from 'shared/components/filter/components-list';
 import { BrowserImagePipe } from 'shared/pipes/browser-image.pipe';
 import { ImpressionsComponent } from 'shared/components/impressions-report/impressions.component';
@@ -118,6 +120,7 @@ import { ContextFilterComponent } from 'shared/components/context-table-filter/u
     OverlayComponent,
     TrendValueComponent,
     MiddleEllipsisDirective,
+    FocusVisibleDirective,
     CategoriesTreePropagationDirective,
     CategoriesTreeComponent,
     CheckboxesListFilterComponent,
@@ -170,6 +173,7 @@ import { ContextFilterComponent } from 'shared/components/context-table-filter/u
     TrendValueComponent,
     KalturaPlayerComponent,
     MiddleEllipsisDirective,
+    FocusVisibleDirective,
     CategoriesTreePropagationDirective,
     CategoriesTreeComponent,
     CheckboxesListFilterComponent,
@@ -211,6 +215,7 @@ export class SharedModule {
         CompareService,
         TrendService,
         NavigationDrillDownService,
+        FocusVisibleService,
         CategoriesSearchService,
       ]
     };

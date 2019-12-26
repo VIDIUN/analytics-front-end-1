@@ -1,13 +1,13 @@
 <div class="kDateFilter kOverrideFAIcons">
 
   <div #datesBtn class="datesRangeDropDown" [class.comparing]="comparing"
-       tabindex="0" role="button" aria-label="Date filter"
+       tabindex="0" focusVisible role="button" aria-label="Date filter"
        (keydown.enter)="datesPopup.toggle()">
     <i *ngIf="comparing" class="compareIcon icon-bolt"></i>
     <span>{{_dateRangeLabel}}</span>
     <i class="kIcondropdown_arrow_bottom"></i>
   </div>
-  <a tabindex="0" role="button" *ngIf="comparing" class="kExitCompare"
+  <a tabindex="0" focusVisible role="button" *ngIf="comparing" class="kExitCompare"
      (click)="exitCompare()"
      (keydown.enter)="exitCompare()">
     {{'app.dateFilter.exit' | translate}}
@@ -29,7 +29,7 @@
       <div class="kFilters kPreset" *ngIf="selectedView==='preset'">
         <div class="col">
           <span class="kTitle">{{'app.dateFilter.last' | translate | uppercase}}</span>
-          <p-radioButton tabindex="0" (keydown.enter)="triggerClick(_dateRangeLast.value.val)"
+          <p-radioButton tabindex="0" focusVisible (keydown.enter)="triggerClick(_dateRangeLast.value.val)"
                          *ngFor="let _dateRangeLast of lastDateRangeItems" name="dates" [label]="_dateRangeLast.label"
                          [value]="_dateRangeLast.value.val" [kTooltip]="_dateRangeLast.value.tooltip"
                          [placement]="'left'" [(ngModel)]="selectedDateRange"
@@ -37,7 +37,7 @@
         </div>
         <div class="col">
           <span class="kTitle">{{'app.dateFilter.current' | translate | uppercase}}</span>
-          <p-radioButton tabindex="0" (keydown.enter)="triggerClick(_dateRangeCurrent.value.val)"
+          <p-radioButton tabindex="0" focusVisible (keydown.enter)="triggerClick(_dateRangeCurrent.value.val)"
                          *ngFor="let _dateRangeCurrent of currDateRangeItems" name="dates"
                          [label]="_dateRangeCurrent.label" [value]="_dateRangeCurrent.value.val"
                          [kTooltip]="_dateRangeCurrent.value.tooltip" [placement]="'right'"
@@ -51,12 +51,12 @@
       </div>
       <hr>
       <div class="kCompare" *ngIf="showCompare">
-        <p-checkbox tabindex="0"
+        <p-checkbox tabindex="0" focusVisible
                     [label]="'app.dateFilter.compare' | translate" [(ngModel)]="compare" (keydown.enter)="compare = !compare; disableHiddenElementTabs();" binary="true"></p-checkbox>
-        <p-radioButton tabindex="0" (keydown.enter)="selectedComparePeriod = 'lastYear'"
+        <p-radioButton tabindex="0" focusVisible (keydown.enter)="selectedComparePeriod = 'lastYear'"
                        name="compare" value="lastYear" *ngIf="compare" [(ngModel)]="selectedComparePeriod"
                        [label]="'app.dateFilter.comparelastyear' | translate"></p-radioButton>
-        <p-radioButton tabindex="0" (keydown.enter)="selectedComparePeriod = 'specific'"
+        <p-radioButton tabindex="0" focusVisible (keydown.enter)="selectedComparePeriod = 'specific'"
                        name="compare" value="specific" *ngIf="compare" [(ngModel)]="selectedComparePeriod"
                        (ngModelChange)="updateSpecificCompareStartDate()"
                        [label]="'app.dateFilter.comparespecific' | translate"></p-radioButton>
@@ -65,7 +65,7 @@
                     [(ngModel)]="specificCompareStartDate" [maxDate]="compareMaxDate" [monthNavigator]="true"
                     [yearNavigator]="true" [yearRange]="'2010:2050'"></p-calendar>
       </div>
-      <button tabindex="0"
+      <button tabindex="0" focusVisible
               pButton class="kButtonBranded"
               [disabled]="_applyDisabled"
               [label]="'app.common.apply' | translate"

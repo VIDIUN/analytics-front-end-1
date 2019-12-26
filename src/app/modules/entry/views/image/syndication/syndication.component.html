@@ -5,7 +5,7 @@
       <span>{{'app.engagement.topDomainsReport.topDomains_tt' | translate}}</span>
     </kInputHelper>
     <div class="kBreadcrumbs" *ngIf="_drillDown">
-      <a tabindex="0"
+      <a tabindex="0" focusVisible
          class="kBreadcrumbsLink"
          (click)="_onDrillDown(null)"
          (keydown.enter)="_onDrillDown(null)">
@@ -13,7 +13,7 @@
       </a>
       <span class="separator">/</span>
       <span>{{_drillDown}}</span>
-      <a tabindex="0"
+      <a tabindex="0" focusVisible
          (click)="_openLink({ referrer: _drillDown })"
          (keydown.enter)="_openLink({ referrer: _drillDown })">
         <i class="kIconexternal_link kOpenLink"
@@ -79,7 +79,7 @@
                          onError="this.onerror=null;this.style.display='none'"
                          (error)="holder.classList.add('kIconfile-small')">
                   </div>
-                  <a *ngIf="_drillDown" tabindex="0" class="kOpenLink"
+                  <a *ngIf="_drillDown" tabindex="0" focusVisible class="kOpenLink"
                      (click)="_openLink(data)"
                      (keydown.enter)="_openLink(data)">
                     <i *ngIf="_drillDown" class="kIconexternal_link"
@@ -109,7 +109,7 @@
 
                     <span *ngIf="col === 'referrer'" [appMiddleEllipsis]="data[col]"></span>
 
-                    <a *ngIf="col === 'domain_name'" class="nameLink" tabindex="0"
+                    <a *ngIf="col === 'domain_name'" class="nameLink" tabindex="0" focusVisible
                        (click)="_onDrillDown(data[col])"
                        (keydown.enter)="_onDrillDown(data[col])">
                       {{data[col]}}

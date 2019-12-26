@@ -1,12 +1,15 @@
 import { Directive, ElementRef, HostListener } from '@angular/core';
+import { FocusVisibleService } from 'shared/services';
 
 @Directive({
-  selector: '[appElementFocus]'
+  selector: '[focusVisible]'
 })
-export class ElementFocusDirective {
+export class FocusVisibleDirective {
   @HostListener('focus')
   setInputFocus(): void {
-    this._elementRef.nativeElement.classList.add('has-focus');
+    if (this._focusVisibleService.lastTrigger === 'keyboard') {
+      this._elementRef.nativeElement.classList.add('has-focus');
+    }
   }
   
   @HostListener('blur')
@@ -18,7 +21,7 @@ export class ElementFocusDirective {
     return this._elementRef.nativeElement.classList.contains('has-focus');
   }
   
-  constructor(private _elementRef: ElementRef) {
+  constructor(private _elementRef: ElementRef, private _focusVisibleService: FocusVisibleService) {
   }
   
   public focus(): void {

@@ -4,3 +4,4 @@ export * from './auth.service';
 export * from './report.service';
 export * from './report-helper';
 export * from './navigation-drilldown.service';
+export * from './focus-visible.service';

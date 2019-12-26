@@ -1,9 +1,7 @@
-<div class="kReportTabs kOverrideFAIcons"
-     (keydown.arrowRight)="_moveFocus( 'right')"
-     (keydown.arrowLeft)="_moveFocus('left')">
-  <div role="tab" tabindex="0" class="kTab"
+<div class="kReportTabs kOverrideFAIcons">
+  <div role="tab" tabindex="0" focusVisible class="kTab"
        *ngFor="let tab of tabs"
-       appElementFocus
+       focusVisible
        [attr.aria-selected]="tab.selected"
        [class.kNarrow]="tabs.length < 4 || narrowTabs"
        [class.noContent]="!showValue"
